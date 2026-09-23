@@ -1,0 +1,4 @@
+@import "tailwindcss";
+:root{--navy:#0f2a4d;--navy2:#1a4b8a;--accent:#0ea5e9}
+*{scrollbar-width:thin}
+body{font-family:Inter,system-ui,sans-serif;color:#0f172a;background:#f1f5f9}
