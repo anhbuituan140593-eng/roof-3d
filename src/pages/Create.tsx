@@ -9,7 +9,8 @@ export default function Create(){
   const {roofConfig, setConfig, originalImage, setOriginal, addGenerated, generated} = useAppStore()
   const [busy,setBusy]=useState(false)
   const [beforeAfter,setBeforeAfter]=useState(50)
-  const inputRef=useRef<HTMLInputElement>(null)
+  const cameraRef=useRef<HTMLInputElement>(null)
+  const galleryRef=useRef<HTMLInputElement>(null)
   const last = generated[generated.length-1]
 
   async function onFile(f:File){
@@ -33,11 +34,13 @@ export default function Create(){
         <div className="text-xs font-bold text-[#0f2a4d]">1. Chụp ảnh ngôi nhà</div>
         <div className="mt-2 border-2 border-dashed rounded-xl p-3 bg-slate-50">
           {originalImage ? <img src={originalImage} className="w-full rounded-lg max-h-52 object-cover"/> : <div className="h-32 flex items-center justify-center text-slate-400 text-sm">Chưa có ảnh</div>}
-          <div className="mt-2 flex gap-2">
-            <button onClick={()=>inputRef.current?.click()} className="flex-1 bg-[#0f2a4d] text-white rounded-lg py-2 text-sm font-semibold">Chọn ảnh</button>
-            {originalImage && <button onClick={()=>setOriginal(null)} className="px-3 border rounded-lg text-sm">Xóa</button>}
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            <button onClick={()=>cameraRef.current?.click()} className="bg-[#0f2a4d] text-white rounded-lg py-2.5 text-sm font-semibold flex items-center justify-center gap-1">📷 Chụp ảnh</button>
+            <button onClick={()=>galleryRef.current?.click()} className="bg-white border border-[#0f2a4d] text-[#0f2a4d] rounded-lg py-2.5 text-sm font-semibold flex items-center justify-center gap-1">🖼️ Thư viện</button>
           </div>
-          <input ref={inputRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={e=>e.target.files?.[0] && onFile(e.target.files[0])}/>
+          {originalImage && <button onClick={()=>setOriginal(null)} className="mt-2 w-full border rounded-lg py-1.5 text-sm">Xóa ảnh</button>}
+          <input ref={cameraRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={e=>e.target.files?.[0] && onFile(e.target.files[0])}/>
+          <input ref={galleryRef} type="file" accept="image/*" className="hidden" onChange={e=>e.target.files?.[0] && onFile(e.target.files[0])}/>
           <p className="text-[11px] text-slate-500 mt-2">Mẹo: chụp chính diện hoặc góc 3/4, toàn bộ ngôi nhà trong khung.</p>
         </div>
       </div>
